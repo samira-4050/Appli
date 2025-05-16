@@ -57,17 +57,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {   // On vérifie si le formulaire a
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Import de Bootstrap pour le style -->
     <style>
         body {
-            background: #f0f8ff;
+            background: #e3eaf1;
         }
         .card {
             border: none;
             border-radius: 10px;
         }
         .btn-primary {
-            background-color: #007bff;
+            background-color: rgba(51, 172, 93, 0.92);
         }
         .btn-outline-secondary:hover {
-            background-color: #007bff;
+            background-color: #19bf66;
             color: white;
         }
     </style>
@@ -79,8 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {   // On vérifie si le formulaire a
         <div class="col-md-6">
 
             <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white text-center">
-                    <h4>➕ Ajouter un utilisateur</h4>
+                <div class="card-header bg-success text-white text-center">
+                <h4>➕ Ajouter un utilisateur</h4>
                 </div>
 
                 <div class="card-body">
