@@ -51,10 +51,10 @@
 
     <?php if (isset($_SESSION['db'])): ?>
         <div class="d-grid gap-3 w-100 px-3" style="max-width: 400px;">
-            <a class="btn btn-primary" href="lister.php">📄 Liste des utilisateurs</a>
-            <a class="btn btn-success" href="ajouter.php">➕ Ajouter un utilisateur</a>
-            <a class="btn btn-warning text-dark" href="modifier.php">✏️Modifier un utilisateur</a>
-            <a class="btn btn-danger" href="supprimer.php">🗑️ Supprimer un utilisateur</a>
+            <a class="btn btn-primary" href="controller/UserController.php?action=lister">📄 Liste des utilisateurs</a>
+            <a class="btn btn-success" href="controller/UserController.php?action=ajouter">➕ Ajouter un utilisateur</a>
+            <a class="btn btn-warning text-dark" href="controller/UserController.php?action=modifier">✏️ Modifier un utilisateur</a>
+            <a class="btn btn-danger" href="controller/UserController.php?action=supprimer">🗑️ Supprimer un utilisateur</a>
         </div>
     <?php endif; ?>
 </div>
