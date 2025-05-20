@@ -26,6 +26,7 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Statut</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody class="text-center">
@@ -35,6 +36,9 @@
                 <td><?= htmlspecialchars($row['nom']) ?></td>
                 <td><?= htmlspecialchars($row['prenom']) ?></td>
                 <td><?= htmlspecialchars($row['statut']) ?></td>
+                <td>
+                    <a href="UserController.php?action=modifier&id=<?= $row['Id'] ?>" class="btn btn-sm btn-warning">✏️Modifier</a>
+                    <a href="UserController.php?action=supprimer&id=<?= $row['Id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Confirmer la suppression ?');">🗑️Supprimer</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

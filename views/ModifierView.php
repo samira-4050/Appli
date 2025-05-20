@@ -25,10 +25,10 @@
                         </div>
                     <?php endif; ?>
 
-                    <form method="post">
+                    <form method="post"  action="../controller/UserController.php?action=modifier">
                         <div class="mb-3">
                             <label class="form-label">ID de l'utilisateur :</label>
-                            <input type="number" name="id" class="form-control" required>
+                            <input type="number" name="id" class="form-control" required  value="<?= htmlspecialchars($id ?? '') ?>">
                         </div>
 
                         <div class="mb-3">

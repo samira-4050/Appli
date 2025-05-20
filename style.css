@@ -1,0 +1,14 @@
+body {
+    background: #e3eaf1;
+}
+.card {
+    border: none;
+    border-radius: 10px;
+}
+.btn-primary {
+    background-color: rgba(51, 172, 93, 0.92);
+}
+.btn-outline-secondary:hover {
+    background-color: #19bf66;
+    color: white;
+}

@@ -24,7 +24,7 @@ switch ($action) {
 
             if (empty($erreurs)) {
                 ajouterUtilisateur($conn, $table, $nom, $prenom, $statut);
-                header("Location: index.php?action=lister");
+                header("Location: UserController.php?action=lister");
                 exit;
             }
         }
@@ -39,10 +39,12 @@ switch ($action) {
     include __DIR__ . '/../views/ListView.php';
     break;
     case 'modifier':
+        $table = getTableName();
         $erreurs = [];
         $statutsBDD = getDistinctStatuts($conn, $table);
         $statutsParDefaut = ['actif', 'inactif'];
         $statutsTous = array_unique(array_merge($statutsParDefaut, $statutsBDD));
+        $id = $_GET['id'] ?? '';
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id = $_POST['id'];
@@ -54,7 +56,7 @@ switch ($action) {
 
             if (empty($erreurs)) {
                 updateUser($conn, $table, $id, $nouveauNom, $nouveauPrenom, $statut);
-                header("Location: lister.php");
+                header("Location: UserController.php?action=lister");
                 exit;
             }
         }
@@ -64,6 +66,7 @@ switch ($action) {
 
     case 'supprimer':
         $erreurs = [];
+        $id = $_GET['id'] ?? '';
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $id = $_POST['id'];
@@ -76,7 +79,7 @@ switch ($action) {
 
             if (empty($erreurs)) {
                 supprimerUtilisateur($conn, $id, $table);
-                header("Location: lister.php");
+                header("Location: UserController.php?action=lister");
                 exit;
             }
         }

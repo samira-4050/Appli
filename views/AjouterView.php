@@ -4,22 +4,7 @@
     <meta charset="UTF-8">
     <title>Ajouter un utilisateur</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Import de Bootstrap pour le style -->
-    <style>
-        body {
-            background: #e3eaf1;
-        }
-        .card {
-            border: none;
-            border-radius: 10px;
-        }
-        .btn-primary {
-            background-color: rgba(51, 172, 93, 0.92);
-        }
-        .btn-outline-secondary:hover {
-            background-color: #19bf66;
-            color: white;
-        }
-    </style>
+    <link href="../style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -43,7 +28,7 @@
                         </div>
                     <?php endif; ?>
 
-                    <form method="post"> <!-- Formulaire envoyé par méthode POST -->
+                    <form method="post" action="../controller/UserController.php?action=ajouter"> <!-- Formulaire envoyé par méthode POST -->
                         <div class="mb-3">  <!-- Champ texte pour le prénom -->
                             <label class="form-label">Nom :</label>
                             <input type="text" name="nom" class="form-control" required>

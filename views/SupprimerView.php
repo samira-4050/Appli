@@ -26,10 +26,10 @@
                         </div>
                     <?php endif; ?>
 
-                    <form method="post">
-                        <div class="mb-3">
+                    <form method="post" action="../controller/UserController.php?action=supprimer">
+                    <div class="mb-3">
                             <label class="form-label">ID de l'utilisateur à supprimer :</label>
-                            <input type="number" name="id" class="form-control" required>
+                            <input type="number" name="id" class="form-control" required value="<?= htmlspecialchars($id ?? '') ?>">
                         </div>
 
                         <button type="submit" class="btn btn-danger w-100">Supprimer</button>
