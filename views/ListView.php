@@ -11,24 +11,51 @@
     <h2 class="text-center text-primary mb-4">📋 Liste des utilisateurs</h2>
     <!-- Titre centré avec style bleu -->
 
-    <form class="mb-4" method="get">  <!-- Formulaire de recherche envoyé en GET -->
-        <div class="input-group">
-            <input type="text" class="form-control" name="search" placeholder="Rechercher par ID, nom ou prénom..." value="<?= htmlspecialchars($search) ?>">
-            <!-- Champ texte qui garde la recherche précédente si elle existe -->
-            <button class="btn btn-primary" type="submit"> 🔍 Rechercher</button>  <!-- Bouton pour envoyer la recherche -->
-        </div>
-    </form>
+    <!-- Barre de recherche + filtre statut -->
+    <form method="get" class="mb-4 d-flex gap-3">
+        <input type="text" class="form-control" name="search" placeholder="Rechercher par ID, nom ou prénom..." value="<?= htmlspecialchars($search) ?>">
 
-    <table class="table table-bordered table-hover bg-white shadow">   <!-- Tableau Bootstrap avec bordures et survol -->
-        <thead class="table-primary text-center">  <!-- En-tête du tableau en bleu clair -->
+        <select name="statut" class="form-select">
+            <option value="">-- Tous les statuts --</option>
+            <?php foreach ($statutsTous as $s): ?>
+                <option value="<?= htmlspecialchars($s) ?>" <?= ($filtreStatut === $s) ? 'selected' : '' ?>>
+                    <?= ucfirst(htmlspecialchars($s)) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <button class="btn btn-primary">🔍 Rechercher</button>
+    </form>
+    <!-- Tri dynamique -->
+    <?php
+    $ordreSuivantId = ($triColonne === 'Id' && $ordreTri === 'ASC') ? 'DESC' : 'ASC';
+    $ordreSuivantNom = ($triColonne === 'nom' && $ordreTri === 'ASC') ? 'DESC' : 'ASC';
+    $ordreSuivantPrenom = ($triColonne === 'prenom' && $ordreTri === 'ASC') ? 'DESC' : 'ASC';
+    ?>
+
+    <table class="table table-bordered table-hover bg-white shadow">
+        <thead class="table-primary text-center">
         <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Prénom</th>
+            <th>
+                <a href="?tri=Id&ordre=<?= $ordreSuivantId ?>&search=<?= htmlspecialchars($search) ?>&statut=<?= htmlspecialchars($filtreStatut) ?>" class="text-dark text-decoration-none">
+                    ID <?= ($triColonne === 'Id') ? ($ordreTri === 'ASC' ? '⬆️' : '⬇️') : '' ?>
+                </a>
+            </th>
+            <th>
+                <a href="?tri=nom&ordre=<?= $ordreSuivantNom ?>&search=<?= htmlspecialchars($search) ?>&statut=<?= htmlspecialchars($filtreStatut) ?>" class="text-dark text-decoration-none">
+                    Nom <?= ($triColonne === 'nom') ? ($ordreTri === 'ASC' ? '⬆️' : '⬇️') : '' ?>
+                </a>
+            </th>
+            <th>
+                <a href="?tri=prenom&ordre=<?= $ordreSuivantPrenom ?>&search=<?= htmlspecialchars($search) ?>&statut=<?= htmlspecialchars($filtreStatut) ?>" class="text-dark text-decoration-none">
+                    Prénom <?= ($triColonne === 'prenom') ? ($ordreTri === 'ASC' ? '⬆️' : '⬇️') : '' ?>
+                </a>
+            </th>
             <th>Statut</th>
             <th>Actions</th>
         </tr>
         </thead>
+
         <tbody class="text-center">
         <?php foreach ($users as $row): ?> <!-- Boucle sur les résultats récupérés dans la base -->
             <tr>

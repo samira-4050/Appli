@@ -33,8 +33,15 @@ switch ($action) {
 
     case 'lister':
     default:
-        $search = $_GET['search'] ?? '';
-        $users = getUsers($conn, $search, $table);
+    $search = $_GET['search'] ?? '';
+    $filtreStatut = $_GET['statut'] ?? ''; // 🔹 Ajout du filtre par statut
+    $triColonne = $_GET['tri'] ?? 'Id';     // 🔹 Ajout tri : colonne à trier (par défaut Id)
+    $ordreTri = $_GET['ordre'] ?? 'ASC';    // 🔹 Ajout tri : ordre du tri
+    $users = getUsers($conn, $search, $table, $filtreStatut, $triColonne, $ordreTri);
+    // Optionnel : pour afficher les statuts disponibles dans le select
+    $statutsBDD = getDistinctStatuts($conn, $table);
+    $statutsParDefaut = ['actif', 'inactif'];
+    $statutsTous = array_unique(array_merge($statutsParDefaut, $statutsBDD));
 
     include __DIR__ . '/../views/ListView.php';
     break;

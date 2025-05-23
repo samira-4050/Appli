@@ -4,7 +4,7 @@ function getTableName(): string
     return ($_SESSION['db'] ?? '') === 'UserTest' ? '[Users]' : '[User]';
 }
 
-function getUsers(PDO $conn, string $search = '', string $table = '[User]'): array
+function getUsers($conn, $search = '', $table = '[User]', $filtreStatut = '', $tri = 'Id', $ordre = 'ASC')
 {
     $sql = "SELECT * FROM $table WHERE 1=1";
     $params = [];
@@ -14,7 +14,17 @@ function getUsers(PDO $conn, string $search = '', string $table = '[User]'): arr
         $searchParam = '%' . $search . '%';
         $params = [$searchParam, $searchParam, $searchParam];
     }
+    if (!empty($filtreStatut)) {
+        $sql .= " AND statut = ?";
+        $params[] = $filtreStatut;
+    }
 
+
+    $colonnesValides = ['Id', 'nom', 'prenom'];
+    if (!in_array($tri, $colonnesValides)) $tri = 'Id';
+    $ordre = strtoupper($ordre) === 'DESC' ? 'DESC' : 'ASC';
+
+    $sql .= " ORDER BY $tri $ordre";
     $stmt = $conn->prepare($sql);
     $stmt->execute($params);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
