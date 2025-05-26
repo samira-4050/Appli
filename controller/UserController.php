@@ -45,6 +45,7 @@ switch ($action) {
 
     include __DIR__ . '/../views/ListView.php';
     break;
+
     case 'modifier':
         $table = getTableName();
         $erreurs = [];
@@ -92,6 +93,29 @@ switch ($action) {
         }
 
         include __DIR__ . '/../views/SupprimerView.php';
+        break;
+
+    case 'actionGroupee':
+        $ids = $_POST['ids'] ?? [];
+        $action = $_POST['action'] ?? '';
+        $table = getTableName();
+        $search = $_GET['search'] ?? '';
+        $filtreStatut = $_GET['statut'] ?? '';
+        $triColonne = $_GET['tri'] ?? 'Id';
+        $ordreTri = $_GET['ordre'] ?? 'ASC';
+        $users = getUsers($conn, $search, $table, $filtreStatut, $triColonne, $ordreTri);
+        $statutsBDD = getDistinctStatuts($conn, $table);
+        $statutsParDefaut = ['actif', 'inactif'];
+        $statutsTous = array_unique(array_merge($statutsParDefaut, $statutsBDD));
+
+        if (!empty($ids) && in_array($action, ['set_inactif', 'set_actif'])) {
+            $nouveauStatut = $action === 'set_inactif' ? 'inactif' : 'actif';
+            updateStatutMultiple($conn, $table, $ids, $nouveauStatut);
+            $message = "Mise à jour effectuée pour " . count($ids) . " utilisateurs.";
+        } else {
+            $message = "Aucune action n’a été effectuée.";
+        }
+        include __DIR__ . '/../views/ListView.php';
         break;
 }
 

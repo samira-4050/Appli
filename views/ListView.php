@@ -33,9 +33,15 @@
     $ordreSuivantPrenom = ($triColonne === 'prenom' && $ordreTri === 'ASC') ? 'DESC' : 'ASC';
     ?>
 
+    <?php if (!empty($message)): ?>
+        <div class="alert alert-info"><?= htmlspecialchars($message) ?></div>
+    <?php endif; ?>
+
+    <form method="post" action="UserController.php?action=actionGroupee">
     <table class="table table-bordered table-hover bg-white shadow">
         <thead class="table-primary text-center">
         <tr>
+            <th><input type="checkbox" onclick="toggle(this)"></th>
             <th>
                 <a href="?tri=Id&ordre=<?= $ordreSuivantId ?>&search=<?= htmlspecialchars($search) ?>&statut=<?= htmlspecialchars($filtreStatut) ?>" class="text-dark text-decoration-none">
                     ID <?= ($triColonne === 'Id') ? ($ordreTri === 'ASC' ? '⬆️' : '⬇️') : '' ?>
@@ -59,6 +65,7 @@
         <tbody class="text-center">
         <?php foreach ($users as $row): ?> <!-- Boucle sur les résultats récupérés dans la base -->
             <tr>
+                <td><input type="checkbox" name="ids[]" value="<?= $row['Id'] ?>"></td>
                 <td><?= htmlspecialchars($row['Id']) ?></td>
                 <td><?= htmlspecialchars($row['nom']) ?></td>
                 <td><?= htmlspecialchars($row['prenom']) ?></td>
@@ -70,6 +77,23 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+
+    <select name="action">
+        <option value="">-- Action groupée --</option>
+        <option value="set_inactif">Mettre en inactif</option>
+        <option value="set_actif">Mettre en actif</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Appliquer</button>
+    </form>
+
+    <script>
+        function toggle(source) {
+            const checkboxes = document.getElementsByName('ids[]');
+            for (let i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
 
     <div class="text-center mt-3">
         <a href="../index.php" class="btn btn-outline-secondary"> ⬅ Retour au menu</a> <!-- Bouton pour revenir à la page d’accueil -->

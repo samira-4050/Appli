@@ -90,4 +90,17 @@ function supprimerUtilisateur(PDO $conn, $id, string $table): bool
     $stmt = $conn->prepare($sql);
     return $stmt->execute([$id]);
 }
+function updateStatutMultiple(PDO $conn, string $table, array $ids, string $statut): bool
+{
+    $ids = array_filter($ids, 'is_numeric');
+    if (empty($ids)) return false;
+
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $sql = "UPDATE $table SET statut = ? WHERE Id IN ($placeholders)";
+    $params = array_merge([$statut], $ids);
+
+    $stmt = $conn->prepare($sql);
+    return $stmt->execute($params);
+}
+
 ?>
